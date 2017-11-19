@@ -85,7 +85,7 @@
 <p>The most accurate way to measure convergence is using the coupling time of a perfect sampling algorithm, such as <a href="">coupling from the past</a> (CFTP). However, we can obtain a rough estimate by monitoring the distribution of the sufficient statistic: <span class="math display">\[
 \text{S}(\mathbf{z}) = \sum_{\{i,j\} \in \mathcal{E}} \delta(z_i, z_j)
 \]</span> Where <span class="math inline">\(\delta(x,y)\)</span> is the <a href="https://en.wikipedia.org/wiki/Kronecker_delta">Kronecker delta</a> function. Note that this sum is defined over the <em>unique</em> undirected edges of the lattice, to avoid double-counting. Under this definition, the critical temperature of the <span class="math inline">\(q\)</span>-state Potts model is <span class="math inline">\(\log\{1 + \sqrt{q}\}\)</span>, or <span class="math inline">\(\approx 0.88\)</span> for the Ising model with <span class="math inline">\(q=2\)</span> unique labels. Some papers state that the critical temperature of the Ising model is <span class="math inline">\(0.44\)</span>, but this is because they have used a different definition of <span class="math inline">\(\text{S}(\mathbf{z})\)</span>.</p>
-<p>We will generate synthetic data for a sequence of values of the inverse temperature, <span class="math inline">\(\beta = (0.22, 0.44, 0.88, 1.32, 1.76, 2.20)\)</span>:</p>
+<p>We will generate synthetic data for a sequence of values of the inverse temperature, <span class="math inline">\(\beta = (0.22, 0.44, 0.88, 1.32)\)</span>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bayesImageS)</code></pre></div>
 <pre><code>## Warning: package 'bayesImageS' was built under R version 3.4.2</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(doParallel)</code></pre></div>
@@ -94,7 +94,7 @@
 <pre><code>## Loading required package: parallel</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">set.seed</span>(<span class="dv">123</span>)
 q &lt;-<span class="st"> </span><span class="dv">2</span>
-beta &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.22</span>, <span class="fl">0.44</span>, <span class="fl">0.88</span>, <span class="fl">1.32</span>, <span class="fl">1.76</span>, <span class="fl">2.20</span>)
+beta &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">0.22</span>, <span class="fl">0.44</span>, <span class="fl">0.88</span>, <span class="fl">1.32</span>)
 mask &lt;-<span class="st"> </span><span class="kw">matrix</span>(<span class="dv">1</span>,<span class="dt">nrow=</span><span class="dv">500</span>,<span class="dt">ncol=</span><span class="dv">500</span>)
 n &lt;-<span class="st"> </span><span class="kw">prod</span>(<span class="kw">dim</span>(mask))
 neigh &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getNeighbors.html">getNeighbors</a></span>(mask, <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>))
@@ -121,7 +121,7 @@ cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(<span class
   gen
 })</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.311   0.064  19.953</code></pre>
+##   0.255   0.046  12.810</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stopCluster</span>(cl)</code></pre></div>
 <p>Now let’s look at the distribution of Gibbs samples for the first dataset, using a fixed value of <span class="math inline">\(\beta\)</span>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">priors &lt;-<span class="st"> </span><span class="kw">list</span>()
@@ -138,11 +138,11 @@ tm &lt;-<span class="st"> </span><span class="kw">system.time</span>(res &lt;-<s
                             block, priors, mh, <span class="dv">100</span>, <span class="dv">50</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tm)</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  29.962   2.201   9.002</code></pre>
+##  30.036   2.062   9.035</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(res<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>])</code></pre></div>
-<pre><code>## [1] 277550</code></pre>
+<pre><code>## [1] 277697</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(synth[[<span class="dv">1</span>]]<span class="op">$</span>sum)</code></pre></div>
-<pre><code>## [1] 277572</code></pre>
+<pre><code>## [1] 278040</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">1</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
@@ -152,7 +152,7 @@ tm2 &lt;-<span class="st"> </span><span class="kw">system.time</span>(res2 &lt;-
                       neigh, block, priors, mh, <span class="dv">100</span>, <span class="dv">50</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tm2)</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  29.735   2.415   9.353</code></pre>
+##  30.088   2.208   9.056</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res2<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">2</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
@@ -162,7 +162,7 @@ tm3 &lt;-<span class="st"> </span><span class="kw">system.time</span>(res3 &lt;-
                       neigh, block, priors, mh, <span class="dv">100</span>, <span class="dv">50</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tm3)</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  31.667   1.899   9.100</code></pre>
+##  28.393   2.689   9.364</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res3<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">3</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
@@ -172,7 +172,7 @@ tm4 &lt;-<span class="st"> </span><span class="kw">system.time</span>(res4 &lt;-
                     neigh, block, priors, mh, <span class="dv">300</span>, <span class="dv">150</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tm4)</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  93.928   6.270  27.938</code></pre>
+##  88.838   7.391  28.082</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res4<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">4</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
@@ -180,7 +180,7 @@ tm4 &lt;-<span class="st"> </span><span class="kw">system.time</span>(res4 &lt;-
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(res5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmcPottsNoData.html">mcmcPottsNoData</a></span>(synth[[<span class="dv">4</span>]]<span class="op">$</span>beta, q,
                                     neigh, block, <span class="dv">5000</span>))</code></pre></div>
 <pre><code>##    user  system elapsed 
-## 264.282  13.529  83.061</code></pre>
+## 261.819  17.935  89.300</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res5<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">4</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>

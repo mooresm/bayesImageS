@@ -96,7 +96,7 @@ edges &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getEd
 <pre><code>## [1] "64 pixels"</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">"maximum sufficient statistic S(z) ="</span>,<span class="kw">nrow</span>(edges)))</code></pre></div>
 <pre><code>## [1] "maximum sufficient statistic S(z) = 112"</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.Gibbs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmcPottsNoData.html">mcmcPottsNoData</a></span>(<span class="dt">beta=</span><span class="dv">5</span>, <span class="dt">k=</span><span class="dv">3</span>, neigh, block, <span class="dt">niter=</span><span class="dv">50</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.Gibbs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmcPottsNoData.html">mcmcPottsNoData</a></span>(<span class="dt">beta=</span><span class="dv">5</span>, <span class="dt">k=</span><span class="dv">3</span>, neigh, block, <span class="dt">niter=</span><span class="dv">100</span>)
 <span class="kw">ts.plot</span>(res.Gibbs<span class="op">$</span>sum, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="kw">nrow</span>(edges)<span class="op">/</span><span class="dv">3</span>, <span class="kw">nrow</span>(edges)))
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
 <div class="figure">
@@ -104,10 +104,10 @@ edges &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getEd
 Chequerboard Gibbs sampling for a regular 8x8 lattice with k=3 labels.
 </p>
 </div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(res.Gibbs<span class="op">$</span>sum[<span class="dv">36</span><span class="op">:</span><span class="dv">50</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(res.Gibbs<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>])</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
 ##     112     112     112     112     112     112</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(res.Gibbs<span class="op">$</span>sum[<span class="dv">36</span><span class="op">:</span><span class="dv">50</span>])</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(res.Gibbs<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>])</code></pre></div>
 <pre><code>## [1] 0</code></pre>
 <p>We can see that it only takes around 35 iterations for the Gibbs sampler to converge for a lattice of that size. Now for a 125×125 lattice:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">n &lt;-<span class="st"> </span><span class="dv">125</span><span class="op">*</span><span class="dv">125</span>
@@ -129,9 +129,9 @@ Chequerboard Gibbs sampling for a regular 125x125 lattice with k=3 labels.
 </div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(res.Gibbs<span class="op">$</span>sum[<span class="dv">1001</span><span class="op">:</span><span class="dv">2000</span>])</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   30479   30567   30614   30601   30642   30655</code></pre>
+##   30642   30720   30768   30750   30787   30804</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(res.Gibbs<span class="op">$</span>sum[<span class="dv">1001</span><span class="op">:</span><span class="dv">2000</span>])</code></pre></div>
-<pre><code>## [1] 1797.793</code></pre>
+<pre><code>## [1] 2032.057</code></pre>
 <p>Even after 2000 iterations, the distribution of S(<strong>z</strong>) might not have converged to the known value. Now let’s see how Swendsen-Wang performs for the same lattice:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.SW &lt;-<span class="st"> </span><span class="kw"><a href="../reference/swNoData.html">swNoData</a></span>(<span class="dt">beta=</span><span class="dv">5</span>, <span class="dt">k=</span><span class="dv">3</span>, neigh, block, <span class="dt">niter=</span><span class="dv">50</span>)
 <span class="kw">ts.plot</span>(res.SW<span class="op">$</span>sum, <span class="dt">ylim=</span><span class="kw">c</span>(<span class="kw">nrow</span>(edges)<span class="op">/</span><span class="dv">3</span>, <span class="kw">nrow</span>(edges)))
@@ -169,16 +169,16 @@ block &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getBl
 edges &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getEdges.html">getEdges</a></span>(mask, <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>))
 <span class="kw">system.time</span>(res2.Gibbs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmcPottsNoData.html">mcmcPottsNoData</a></span>(<span class="dt">beta=</span><span class="dv">0</span>, <span class="dt">k=</span><span class="dv">3</span>, neigh, block, <span class="dt">niter=</span><span class="dv">100</span>, <span class="dt">random=</span><span class="ot">FALSE</span>))</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.394   0.028   0.144</code></pre>
+##   0.438   0.062   0.175</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res2.Gibbs<span class="op">$</span>sum, <span class="dt">ylim=</span><span class="kw">range</span>(<span class="kw">c</span>(res2.Gibbs<span class="op">$</span>sum, <span class="kw">nrow</span>(edges))))
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>)
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges)<span class="op">/</span><span class="dv">3</span>, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
 <p><img src="mcmcPottsNoData_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(res2.Gibbs<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>])</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   10129   10268   10332   10332   10394   10514</code></pre>
+##   10172   10261   10330   10331   10408   10544</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(res2.Gibbs<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>])</code></pre></div>
-<pre><code>## [1] 7486.134</code></pre>
+<pre><code>## [1] 7242.134</code></pre>
 <p>The distribution of all 500 samples are very close to the exact distribution with mean 10333.33 and variance 6888.89:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">muSz &lt;-<span class="st"> </span><span class="kw">nrow</span>(edges)<span class="op">/</span><span class="dv">3</span>
 sdSz &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">nrow</span>(edges)<span class="op">*</span>(<span class="dv">1</span><span class="op">/</span><span class="dv">3</span>)<span class="op">*</span>(<span class="dv">2</span><span class="op">/</span><span class="dv">3</span>))
@@ -191,16 +191,16 @@ sdSz &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw"
 <p>Now for Swendsen-Wang:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(res2.SW &lt;-<span class="st"> </span><span class="kw"><a href="../reference/swNoData.html">swNoData</a></span>(<span class="dt">beta=</span><span class="dv">0</span>, <span class="dt">k=</span><span class="dv">3</span>, neigh, block, <span class="dt">niter=</span><span class="dv">100</span>, <span class="dt">random=</span><span class="ot">FALSE</span>))</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.753   0.051   0.226</code></pre>
+##   0.836   0.035   0.228</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res2.SW<span class="op">$</span>sum, <span class="dt">ylim=</span><span class="kw">range</span>(<span class="kw">c</span>(res2.SW<span class="op">$</span>sum, <span class="kw">nrow</span>(edges))))
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>)
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges)<span class="op">/</span><span class="dv">3</span>, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
 <p><img src="mcmcPottsNoData_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(res2.SW<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>])</code></pre></div>
 <pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
-##   10156   10291   10332   10331   10368   10505</code></pre>
+##   10139   10294   10348   10347   10390   10552</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">var</span>(res2.SW<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>])</code></pre></div>
-<pre><code>## [1] 6868.608</code></pre>
+<pre><code>## [1] 6509.104</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">hist</span>(res2.SW<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>], <span class="dt">freq=</span><span class="ot">FALSE</span>, <span class="dt">breaks=</span><span class="dv">20</span>, <span class="dt">col=</span><span class="dv">3</span>,
      <span class="dt">xlim=</span><span class="kw">range</span>(<span class="kw">c</span>(res2.Gibbs<span class="op">$</span>sum,muSz <span class="op">-</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>sdSz, muSz <span class="op">+</span><span class="st"> </span><span class="dv">3</span><span class="op">*</span>sdSz)))
 <span class="kw">abline</span>(<span class="dt">v=</span><span class="kw">nrow</span>(edges)<span class="op">/</span><span class="dv">3</span>, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">3</span>, <span class="dt">lwd=</span><span class="dv">3</span>)
