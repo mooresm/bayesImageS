@@ -47,6 +47,12 @@
 <li>
       <a href="articles/mcmcPotts.html">bayesImageS::mcmcPotts</a>
     </li>
+    <li>
+      <a href="articles/mcmcPottsNoData.html">bayesImageS::mcmcPottsNoData</a>
+    </li>
+    <li>
+      <a href="articles/swNoData.html">bayesImageS::swNoData</a>
+    </li>
   </ul>
 </li>
 <li>
@@ -128,22 +134,22 @@ y &lt;-<span class="st"> </span>m0[l] <span class="op">+</span><span class="st">
 <p><img src="inst/image/README-unnamed-chunk-5-1.png" width="672"></p>
 <p>Image segmentation using ABC-SMC:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">res.smc &lt;-<span class="st"> </span><span class="kw"><a href="reference/smcPotts.html">smcPotts</a></span>(y, neigh, blocks, <span class="dt">priors=</span>priors)
-<span class="co">#&gt; Initialization took 7sec</span>
+<span class="co">#&gt; Initialization took 6sec</span>
 <span class="co">#&gt; Iteration 1</span>
 <span class="co">#&gt; previous epsilon 7 and ESS 10000 (target: 9500)</span>
-<span class="co">#&gt; Took 0sec to update epsilon=2.625 (ESS=9505.29)</span>
-<span class="co">#&gt; Took 7sec for 8918 RWMH updates (bw=0.497509)</span>
+<span class="co">#&gt; Took 1sec to update epsilon=2.625 (ESS=9505.29)</span>
+<span class="co">#&gt; Took 6sec for 8918 RWMH updates (bw=0.497509)</span>
 <span class="co">#&gt; Took 1sec for 10000 iterations to calculate S(z)=7</span>
 <span class="co">#&gt; Iteration 2</span>
 <span class="co">#&gt; previous epsilon 2.625 and ESS 9505.29 (target: 9030.02)</span>
 <span class="co">#&gt; Took 9sec to update epsilon=1 (ESS=7970.86)</span>
-<span class="co">#&gt; Took 7sec for 7671 RWMH updates (bw=0.466951)</span>
+<span class="co">#&gt; Took 6sec for 7671 RWMH updates (bw=0.466951)</span>
 <span class="co">#&gt; Took 1sec for 10000 iterations to calculate S(z)=6</span>
 <span class="co">#&gt; Iteration 3</span>
 <span class="co">#&gt; previous epsilon 1 and ESS 7970.86 (target: 7572.32)</span>
-<span class="co">#&gt; Took 9sec to update epsilon=4.66632e-302 (ESS=7949.67)</span>
-<span class="co">#&gt; Took 7sec for 7968 RWMH updates (bw=0.466673)</span>
-<span class="co">#&gt; Took 1sec for 10000 iterations to calculate S(z)=7</span>
+<span class="co">#&gt; Took 10sec to update epsilon=4.66632e-302 (ESS=7949.67)</span>
+<span class="co">#&gt; Took 6sec for 7968 RWMH updates (bw=0.466673)</span>
+<span class="co">#&gt; Took 0sec for 10000 iterations to calculate S(z)=7</span>
 <span class="co"># pixel classifications</span>
 pred &lt;-<span class="st"> </span>res.smc<span class="op">$</span>alloc<span class="op">/</span><span class="kw">rowSums</span>(res.smc<span class="op">$</span>alloc)
 predMx &lt;-<span class="st"> </span><span class="kw">as.raster</span>(<span class="kw">array</span>(pred, <span class="dt">dim=</span><span class="kw">c</span>(<span class="kw">nrow</span>(mask),<span class="kw">ncol</span>(mask),<span class="dv">3</span>)))
