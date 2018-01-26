@@ -68,13 +68,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/mcmcPotts.html">bayesImageS::mcmcPotts</a>
+      <a href="../articles/mcmcPotts.html">mcmcPotts</a>
     </li>
     <li>
-      <a href="../articles/mcmcPottsNoData.html">bayesImageS::mcmcPottsNoData</a>
+      <a href="../articles/mcmcPottsNoData.html">mcmcPottsNoData</a>
     </li>
     <li>
-      <a href="../articles/swNoData.html">bayesImageS::swNoData</a>
+      <a href="../articles/swNoData.html">swNoData</a>
     </li>
   </ul>
 </li>
@@ -101,12 +101,50 @@
     </div>
 
     <div class="contents">
-    <div id="bayesimages-0-4-0" class="section level1">
+    <div id="bayesimages-0-5-0" class="section level1">
 <h1 class="hasAnchor">
-<a href="#bayesimages-0-4-0" class="anchor"></a>bayesImageS 0.4-0</h1>
+<a href="#bayesimages-0-5-0" class="anchor"></a>bayesImageS 0.5-0</h1>
 <div id="new-features" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-features" class="anchor"></a>New features</h2>
+<ul>
+<li>improvements to Bayesian indirect likelihood (BIL) algorithm (<code>mh$alg="aux"</code>):
+<ul>
+<li>MH hyperparameter <code>Ecrit</code> for 2nd order phase transition when k &gt; 4</li>
+<li>MH hyperparameter <code>factor</code> to inflate the variance of the surrogate model</li>
+<li>separate MH hyperparameters <code>Vmax1</code>,<code>Vmax2</code> for $\beta &lt; \beta_{crit}$ and $\beta &gt; \beta_{crit}$, respectively</li>
+</ul>
+</li>
+<li>option <code>mh$sort</code> to impose an ordering constraint on the component means</li>
+</ul>
+</div>
+<div id="bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<ul>
+<li><p>removed OpenMP options from <code>Makevars</code> to fix problems with RcppArmadillo. Users should edit <code>~/.R/Makevars</code> to enabel multithreading.</p></li>
+<li><p>no longer wait for <code>mh$auxiliary</code> iterations before beginning to update $\beta$ using the exchange algorithm or ABC. For $\beta &gt; \beta_{crit}$, this increased the propensity of the Gibbs sampler to become stuck in a suboptimal local mode, far from the true parameter value.</p></li>
+<li><p>added <code>jss.bst</code> and <code>jss.cls</code> to <code>.Rbuildignore</code></p></li>
+</ul>
+</div>
+</div>
+    <div id="bayesimages-0-4-1" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bayesimages-0-4-1" class="anchor"></a>bayesImageS 0.4-1</h1>
+<ul>
+<li><p>removed the deprecated <code>slices</code> parameter from <code><a href="../reference/mcmcPotts.html">mcmcPotts()</a></code></p></li>
+<li><p>some minor edits to the <code>Roxygen</code> documentation</p></li>
+<li><p>added ORCID to DESCRIPTION</p></li>
+<li><p>removed the R package <code>PottsUtils</code> from Suggested packages; added <code>mcmcse</code></p></li>
+<li><p>moved <code>README-chunkname.png</code> images from root directory to <code>inst/images</code></p></li>
+</ul>
+</div>
+    <div id="bayesimages-0-4-0" class="section level1">
+<h1 class="hasAnchor">
+<a href="#bayesimages-0-4-0" class="anchor"></a>bayesImageS 0.4-0</h1>
+<div id="new-features-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features-1" class="anchor"></a>New features</h2>
 <ul>
 <li>Functions getNeighbors(), getEdges(), getBlocks() contributed by Dai Feng. These are currently exact copies of the equivalent functions in the R package PottsUtils. The reason for duplicating this code is to avoid picking up dependencies on miscF, R2jags, BRugs, etc.
 <ul>
@@ -117,9 +155,9 @@
 <li><p>Additional documentation in README.md with an example of usage</p></li>
 </ul>
 </div>
-<div id="bug-fixes" class="section level2">
+<div id="bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#bug-fixes" class="anchor"></a>Bug fixes</h2>
+<a href="#bug-fixes-1" class="anchor"></a>Bug fixes</h2>
 <ul>
 <li>Fixed compile errors on SPARC Solaris
 <ul>
@@ -149,7 +187,6 @@
 </li>
 </ul>
 </div>
-    NA
     </div>
   </div>
 
@@ -157,10 +194,11 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#bayesimages-0-5-0">0.5-0</a></li>
+        <li><a href="#bayesimages-0-4-1">0.4-1</a></li>
         <li><a href="#bayesimages-0-4-0">0.4-0</a></li>
         <li><a href="#bayesimages-0-3-3">0.3-3</a></li>
         <li><a href="#bayesimages-0-1-21">0.1-21</a></li>
-        <li><a href="#NA">NA</a></li>
       </ul>
     </div>
   </div>
