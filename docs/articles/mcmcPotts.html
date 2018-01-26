@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>bayesImageS::mcmcPotts • bayesImageS</title>
+<title>mcmcPotts • bayesImageS</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -45,13 +45,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/mcmcPotts.html">bayesImageS::mcmcPotts</a>
+      <a href="../articles/mcmcPotts.html">mcmcPotts</a>
     </li>
     <li>
-      <a href="../articles/mcmcPottsNoData.html">bayesImageS::mcmcPottsNoData</a>
+      <a href="../articles/mcmcPottsNoData.html">mcmcPottsNoData</a>
     </li>
     <li>
-      <a href="../articles/swNoData.html">bayesImageS::swNoData</a>
+      <a href="../articles/swNoData.html">swNoData</a>
     </li>
   </ul>
 </li>
@@ -71,7 +71,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>bayesImageS::mcmcPotts</h1>
+      <h1>mcmcPotts</h1>
                         <h4 class="author">Matt Moores</h4>
             
             <h4 class="date">19 November 2017</h4>
@@ -86,9 +86,8 @@
 \text{S}(\mathbf{z}) = \sum_{\{i,j\} \in \mathcal{E}} \delta(z_i, z_j)
 \]</span> Where <span class="math inline">\(\delta(x,y)\)</span> is the <a href="https://en.wikipedia.org/wiki/Kronecker_delta">Kronecker delta</a> function. Note that this sum is defined over the <em>unique</em> undirected edges of the lattice, to avoid double-counting. Under this definition, the critical temperature of the <span class="math inline">\(q\)</span>-state Potts model is <span class="math inline">\(\log\{1 + \sqrt{q}\}\)</span>, or <span class="math inline">\(\approx 0.88\)</span> for the Ising model with <span class="math inline">\(q=2\)</span> unique labels. Some papers state that the critical temperature of the Ising model is <span class="math inline">\(0.44\)</span>, but this is because they have used a different definition of <span class="math inline">\(\text{S}(\mathbf{z})\)</span>.</p>
 <p>We will generate synthetic data for a sequence of values of the inverse temperature, <span class="math inline">\(\beta = (0.22, 0.44, 0.88, 1.32)\)</span>:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bayesImageS)</code></pre></div>
-<pre><code>## Warning: package 'bayesImageS' was built under R version 3.4.2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(doParallel)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bayesImageS)
+<span class="kw">library</span>(doParallel)</code></pre></div>
 <pre><code>## Loading required package: foreach</code></pre>
 <pre><code>## Loading required package: iterators</code></pre>
 <pre><code>## Loading required package: parallel</code></pre>
@@ -121,7 +120,7 @@ cl &lt;-<span class="st"> </span><span class="kw">makeCluster</span>(<span class
   gen
 })</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.255   0.046  12.810</code></pre>
+##   0.261   0.046  12.922</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">stopCluster</span>(cl)</code></pre></div>
 <p>Now let’s look at the distribution of Gibbs samples for the first dataset, using a fixed value of <span class="math inline">\(\beta\)</span>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">priors &lt;-<span class="st"> </span><span class="kw">list</span>()
@@ -138,11 +137,11 @@ tm &lt;-<span class="st"> </span><span class="kw">system.time</span>(res &lt;-<s
                             block, priors, mh, <span class="dv">100</span>, <span class="dv">50</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tm)</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  30.036   2.062   9.035</code></pre>
+##  32.463   1.943   9.384</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">mean</span>(res<span class="op">$</span>sum[<span class="dv">51</span><span class="op">:</span><span class="dv">100</span>])</code></pre></div>
-<pre><code>## [1] 277697</code></pre>
+<pre><code>## [1] 277757.9</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(synth[[<span class="dv">1</span>]]<span class="op">$</span>sum)</code></pre></div>
-<pre><code>## [1] 278040</code></pre>
+<pre><code>## [1] 278045</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">1</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-3-1.png" width="672"></p>
@@ -152,7 +151,7 @@ tm2 &lt;-<span class="st"> </span><span class="kw">system.time</span>(res2 &lt;-
                       neigh, block, priors, mh, <span class="dv">100</span>, <span class="dv">50</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tm2)</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  30.088   2.208   9.056</code></pre>
+##  33.891   2.231  10.051</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res2<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">2</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
@@ -162,7 +161,7 @@ tm3 &lt;-<span class="st"> </span><span class="kw">system.time</span>(res3 &lt;-
                       neigh, block, priors, mh, <span class="dv">100</span>, <span class="dv">50</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tm3)</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  28.393   2.689   9.364</code></pre>
+##  33.039   2.277   9.815</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res3<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">3</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
@@ -172,7 +171,7 @@ tm4 &lt;-<span class="st"> </span><span class="kw">system.time</span>(res4 &lt;-
                     neigh, block, priors, mh, <span class="dv">300</span>, <span class="dv">150</span>))</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">print</span>(tm4)</code></pre></div>
 <pre><code>##    user  system elapsed 
-##  88.838   7.391  28.082</code></pre>
+##  96.538   6.290  28.303</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res4<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">4</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
@@ -180,11 +179,11 @@ tm4 &lt;-<span class="st"> </span><span class="kw">system.time</span>(res4 &lt;-
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(res5 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmcPottsNoData.html">mcmcPottsNoData</a></span>(synth[[<span class="dv">4</span>]]<span class="op">$</span>beta, q,
                                     neigh, block, <span class="dv">5000</span>))</code></pre></div>
 <pre><code>##    user  system elapsed 
-## 261.819  17.935  89.300</code></pre>
+## 259.812   6.044  70.677</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res5<span class="op">$</span>sum, <span class="dt">xlab=</span><span class="st">"MCMC iterations"</span>, <span class="dt">ylab=</span><span class="kw">expression</span>(<span class="kw">S</span>(z)))
 <span class="kw">abline</span>(<span class="dt">h=</span>synth[[<span class="dv">4</span>]]<span class="op">$</span>sum, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">2</span>)</code></pre></div>
 <p><img src="mcmcPotts_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
-<p>This explains why single-site Gibbs sampling should  be used for the auxiliary iterations in ABC or the exchange algorithm, but it is usually fine to use when updating the hidden labels. Note that all of these results have been for a fixed <span class="math inline">\(\beta\)</span>. It is more difficult to assess convergence when <span class="math inline">\(\beta\)</span> is unknown. A topic for a future post!</p>
+<p>This explains why single-site Gibbs sampling should <strong>never</strong> be used for the auxiliary iterations in ABC or the exchange algorithm, but it is usually fine to use when updating the hidden labels. Note that all of these results have been for a fixed <span class="math inline">\(\beta\)</span>. It is more difficult to assess convergence when <span class="math inline">\(\beta\)</span> is unknown. A topic for a future post!</p>
 </div>
   </div>
 

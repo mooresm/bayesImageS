@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>bayesImageS::swNoData • bayesImageS</title>
+<title>swNoData • bayesImageS</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
@@ -45,13 +45,13 @@
   </a>
   <ul class="dropdown-menu" role="menu">
 <li>
-      <a href="../articles/mcmcPotts.html">bayesImageS::mcmcPotts</a>
+      <a href="../articles/mcmcPotts.html">mcmcPotts</a>
     </li>
     <li>
-      <a href="../articles/mcmcPottsNoData.html">bayesImageS::mcmcPottsNoData</a>
+      <a href="../articles/mcmcPottsNoData.html">mcmcPottsNoData</a>
     </li>
     <li>
-      <a href="../articles/swNoData.html">bayesImageS::swNoData</a>
+      <a href="../articles/swNoData.html">swNoData</a>
     </li>
   </ul>
 </li>
@@ -71,7 +71,7 @@
       </header><div class="row">
   <div class="col-md-9">
     <div class="page-header toc-ignore">
-      <h1>bayesImageS::swNoData</h1>
+      <h1>swNoData</h1>
                         <h4 class="author">Matt Moores</h4>
             
             <h4 class="date">13 December 2013</h4>
@@ -99,9 +99,8 @@ samp.PU &lt;-<span class="st"> </span>samp.bIS &lt;-<span class="st"> </span><sp
 S(z) = \sum_{i \sim \ell \in \mathscr{N}} \delta(z_i, z_\ell)
 \]</span></p>
 <p>where <span class="math inline">\(i \sim \ell \in \mathscr{N}\)</span> are all of the pairs of neighbours in the lattice (ie. the cliques) and <span class="math inline">\(\delta(u,v)\)</span> is 1 if <span class="math inline">\(u = v\)</span> and 0 otherwise (the Kronecker delta function). <code>swNoData</code> returns this automatically, but with <code>SW</code> we will need to use the function <code>sufficientStat</code> to calculate the sufficient statistic for the labels.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bayesImageS)</code></pre></div>
-<pre><code>## Warning: package 'bayesImageS' was built under R version 3.4.2</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(PottsUtils)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(bayesImageS)
+<span class="kw">library</span>(PottsUtils)</code></pre></div>
 <pre><code>## 
 ## Attaching package: 'PottsUtils'</code></pre>
 <pre><code>## The following objects are masked from 'package:bayesImageS':
@@ -133,65 +132,65 @@ maxSS &lt;-<span class="st"> </span><span class="kw">nrow</span>(edges)
   samp.bIS[i,] &lt;-<span class="st"> </span>result<span class="op">$</span>sum[(burn<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span>iter]
   <span class="kw">print</span>(<span class="kw">paste</span>(<span class="st">"bayesImageS::swNoData"</span>,beta[i],tm[<span class="st">"elapsed"</span>],<span class="kw">median</span>(samp.bIS[i,])))
 }</code></pre></div>
-<pre><code>## [1] "PottsUtils::SW 0 5.163 2450"
-## [1] "bayesImageS::swNoData 0 0.21 2452"
-## [1] "PottsUtils::SW 0.1 3.165 2572"
-## [1] "bayesImageS::swNoData 0.1 0.236000000000001 2571"
-## [1] "PottsUtils::SW 0.2 2.999 2697"
-## [1] "bayesImageS::swNoData 0.2 0.250999999999999 2697"
-## [1] "PottsUtils::SW 0.3 2.921 2834"
-## [1] "bayesImageS::swNoData 0.3 0.258999999999997 2829"
-## [1] "PottsUtils::SW 0.4 2.665 2969"
-## [1] "bayesImageS::swNoData 0.4 0.269000000000002 2971"
-## [1] "PottsUtils::SW 0.5 2.624 3127"
-## [1] "bayesImageS::swNoData 0.5 0.268999999999998 3136"
-## [1] "PottsUtils::SW 0.6 2.454 3309"
-## [1] "bayesImageS::swNoData 0.6 0.27 3309.5"
-## [1] "PottsUtils::SW 0.7 2.372 3519"
-## [1] "bayesImageS::swNoData 0.7 0.266999999999999 3519"
-## [1] "PottsUtils::SW 0.8 2.274 3793.5"
-## [1] "bayesImageS::swNoData 0.8 0.266999999999999 3773.5"
-## [1] "PottsUtils::SW 0.9 2.001 4173"
-## [1] "bayesImageS::swNoData 0.9 0.247 4178"
-## [1] "PottsUtils::SW 1 1.78599999999999 4531"
-## [1] "bayesImageS::swNoData 1 0.231999999999999 4519"
-## [1] "PottsUtils::SW 1.1 1.78899999999999 4677.5"
-## [1] "bayesImageS::swNoData 1.1 0.228000000000002 4674.5"
-## [1] "PottsUtils::SW 1.2 1.829 4764"
-## [1] "bayesImageS::swNoData 1.2 0.222999999999999 4767"
-## [1] "PottsUtils::SW 1.3 1.774 4813.5"
-## [1] "bayesImageS::swNoData 1.3 0.222999999999999 4811"
-## [1] "PottsUtils::SW 1.4 1.766 4845"
-## [1] "bayesImageS::swNoData 1.4 0.219000000000001 4842"
-## [1] "PottsUtils::SW 1.5 1.775 4864"
-## [1] "bayesImageS::swNoData 1.5 0.216999999999999 4864"
-## [1] "PottsUtils::SW 1.6 1.73699999999999 4875"
-## [1] "bayesImageS::swNoData 1.6 0.223000000000006 4876"
-## [1] "PottsUtils::SW 1.7 1.809 4884"
-## [1] "bayesImageS::swNoData 1.7 0.214999999999996 4885"
-## [1] "PottsUtils::SW 1.8 1.8 4889"
-## [1] "bayesImageS::swNoData 1.8 0.216000000000001 4889"
-## [1] "PottsUtils::SW 1.9 1.956 4893"
-## [1] "bayesImageS::swNoData 1.9 0.240000000000002 4893"
-## [1] "PottsUtils::SW 2 1.694 4896"
-## [1] "bayesImageS::swNoData 2 0.259 4896"</code></pre>
+<pre><code>## [1] "PottsUtils::SW 0 6.082 2451"
+## [1] "bayesImageS::swNoData 0 0.192 2451.5"
+## [1] "PottsUtils::SW 0.1 3.614 2573"
+## [1] "bayesImageS::swNoData 0.1 0.237 2577"
+## [1] "PottsUtils::SW 0.2 3.441 2700"
+## [1] "bayesImageS::swNoData 0.2 0.250999999999999 2696"
+## [1] "PottsUtils::SW 0.3 3.376 2829"
+## [1] "bayesImageS::swNoData 0.3 0.261999999999997 2832"
+## [1] "PottsUtils::SW 0.4 3.032 2971"
+## [1] "bayesImageS::swNoData 0.4 0.268999999999998 2971"
+## [1] "PottsUtils::SW 0.5 2.921 3137"
+## [1] "bayesImageS::swNoData 0.5 0.271999999999998 3130"
+## [1] "PottsUtils::SW 0.6 2.803 3312"
+## [1] "bayesImageS::swNoData 0.6 0.273 3309"
+## [1] "PottsUtils::SW 0.7 2.65 3518"
+## [1] "bayesImageS::swNoData 0.7 0.270000000000003 3521"
+## [1] "PottsUtils::SW 0.8 2.557 3786"
+## [1] "bayesImageS::swNoData 0.8 0.268000000000001 3781.5"
+## [1] "PottsUtils::SW 0.9 2.20999999999999 4171"
+## [1] "bayesImageS::swNoData 0.9 0.246000000000002 4174"
+## [1] "PottsUtils::SW 1 2.196 4519"
+## [1] "bayesImageS::swNoData 1 0.233000000000004 4506"
+## [1] "PottsUtils::SW 1.1 2.066 4677"
+## [1] "bayesImageS::swNoData 1.1 0.226999999999997 4680"
+## [1] "PottsUtils::SW 1.2 1.944 4760.5"
+## [1] "bayesImageS::swNoData 1.2 0.222999999999999 4765"
+## [1] "PottsUtils::SW 1.3 1.87 4809"
+## [1] "bayesImageS::swNoData 1.3 0.221999999999994 4814"
+## [1] "PottsUtils::SW 1.4 2.092 4842"
+## [1] "bayesImageS::swNoData 1.4 0.219999999999999 4844"
+## [1] "PottsUtils::SW 1.5 1.98699999999999 4863"
+## [1] "bayesImageS::swNoData 1.5 0.263999999999996 4862"
+## [1] "PottsUtils::SW 1.6 2.057 4876"
+## [1] "bayesImageS::swNoData 1.6 0.213999999999999 4875"
+## [1] "PottsUtils::SW 1.7 2.015 4885"
+## [1] "bayesImageS::swNoData 1.7 0.214999999999996 4883"
+## [1] "PottsUtils::SW 1.8 1.903 4889"
+## [1] "bayesImageS::swNoData 1.8 0.218000000000004 4890"
+## [1] "PottsUtils::SW 1.9 1.912 4893"
+## [1] "bayesImageS::swNoData 1.9 0.210000000000001 4893"
+## [1] "PottsUtils::SW 2 1.966 4896"
+## [1] "bayesImageS::swNoData 2 0.209000000000003 4895"</code></pre>
 <p>Here is the comparison of elapsed times between the two algorithms (in seconds):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(tmMx.PU)</code></pre></div>
 <pre><code>##       user          elapsed     
-##  Min.   :1.988   Min.   :1.694  
-##  1st Qu.:2.116   1st Qu.:1.786  
-##  Median :2.148   Median :1.956  
-##  Mean   :2.611   Mean   :2.303  
-##  3rd Qu.:2.984   3rd Qu.:2.624  
-##  Max.   :4.979   Max.   :5.163</code></pre>
+##  Min.   :2.164   Min.   :1.870  
+##  1st Qu.:2.306   1st Qu.:1.987  
+##  Median :2.487   Median :2.196  
+##  Mean   :2.899   Mean   :2.604  
+##  3rd Qu.:3.193   3rd Qu.:2.921  
+##  Max.   :5.890   Max.   :6.082</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(tmMx.bIS)</code></pre></div>
-<pre><code>##       user           elapsed     
-##  Min.   :0.5730   Min.   :0.210  
-##  1st Qu.:0.8040   1st Qu.:0.223  
-##  Median :0.8800   Median :0.236  
-##  Mean   :0.8724   Mean   :0.240  
-##  3rd Qu.:0.9510   3rd Qu.:0.259  
-##  Max.   :1.0620   Max.   :0.270</code></pre>
+<pre><code>##       user           elapsed      
+##  Min.   :0.5500   Min.   :0.1920  
+##  1st Qu.:0.7950   1st Qu.:0.2180  
+##  Median :0.8580   Median :0.2330  
+##  Mean   :0.8626   Mean   :0.2379  
+##  3rd Qu.:0.9500   3rd Qu.:0.2640  
+##  Max.   :1.0210   Max.   :0.2730</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">boxplot</span>(tmMx.PU[,<span class="st">"elapsed"</span>],tmMx.bIS[,<span class="st">"elapsed"</span>],<span class="dt">ylab=</span><span class="st">"seconds elapsed"</span>,<span class="dt">names=</span><span class="kw">c</span>(<span class="st">"SW"</span>,<span class="st">"swNoData"</span>))</code></pre></div>
 <p><img src="swNoData_files/figure-html/unnamed-chunk-4-1.png" width="672"> On average, <code>swNoData</code> using <strong>RcppArmadillo</strong> is seven times faster than <code>SW</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">library</span>(lattice)
@@ -207,24 +206,24 @@ s.frame<span class="op">$</span>alg &lt;-<span class="st"> </span><span class="k
 <span class="kw">abline</span>(<span class="dt">v=</span>bcrit,<span class="dt">col=</span><span class="st">"red"</span>)</code></pre></div>
 <p><img src="swNoData_files/figure-html/unnamed-chunk-5-2.png" width="672"> The overlap between the two distributions is almost complete, although it is a bit tricky to verify that statistically. The relationship between <span class="math inline">\(beta\)</span> and <span class="math inline">\(S(z)\)</span> is nonlinear and heteroskedastic.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">rowMeans</span>(samp.bIS) <span class="op">-</span><span class="st"> </span><span class="kw">rowMeans</span>(samp.PU)</code></pre></div>
-<pre><code>##  [1]  -0.354   0.468   1.108  -2.930   0.834   7.034   0.900   1.906
-##  [9] -11.248   5.300  -5.520  -1.122   3.700  -2.658  -0.714  -0.324
-## [17]   0.358   0.300   0.358   0.168   0.916</code></pre>
+<pre><code>##  [1]  -0.298   3.730  -2.312   3.868  -1.000  -6.564   0.198   0.846
+##  [9]  -2.084   1.202 -13.370   0.912   2.766   4.762   1.114  -0.768
+## [17]  -1.266  -1.208   0.508   0.406  -0.974</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(samp.PU, <span class="dv">1</span>, sd)</code></pre></div>
-<pre><code>##  [1] 33.553165 33.842508 35.003045 35.878484 38.886006 41.585890 43.227434
-##  [8] 47.629915 56.733809 65.229874 50.833762 34.274704 27.932075 19.241309
-## [15] 16.540771 11.390680  9.987419  8.032944  6.395607  5.123166  4.713813</code></pre>
+<pre><code>##  [1] 33.918284 37.349134 35.183625 36.601219 36.849590 40.164641 46.253912
+##  [8] 45.087912 54.752701 68.239653 48.294698 32.422172 24.500189 19.205551
+## [15] 17.003369 11.961979 10.502900  8.504574  6.286805  5.829919  4.620250</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">apply</span>(samp.bIS, <span class="dv">1</span>, sd)</code></pre></div>
-<pre><code>##  [1] 35.083985 33.431218 35.816362 37.823905 40.052534 42.677764 42.390647
-##  [8] 51.318468 52.321576 71.567834 47.436664 33.641757 23.402799 20.299253
-## [15] 16.040649 12.162033  9.725285  8.385856  6.492400  5.144975  4.048513</code></pre>
+<pre><code>##  [1] 34.296252 34.263141 34.882449 37.700925 38.901764 39.318670 45.163635
+##  [8] 48.796789 56.351898 66.328585 49.008903 30.522084 24.942266 20.276591
+## [15] 16.990411 12.147546 10.364673  8.828958  6.287668  5.559696  5.319567</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">s.frame<span class="op">$</span>beta &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="kw">c</span>(s_x,s_x))
 s.fit &lt;-<span class="st"> </span><span class="kw">aov</span>(stat <span class="op">~</span><span class="st"> </span>alg <span class="op">+</span><span class="st"> </span>beta, <span class="dt">data=</span>s.frame)
 <span class="kw">summary</span>(s.fit)</code></pre></div>
 <pre><code>##                Df    Sum Sq   Mean Sq   F value Pr(&gt;F)    
-## alg             1 2.800e+01        28 2.300e-02   0.88    
-## beta           20 1.745e+10 872279220 7.174e+05 &lt;2e-16 ***
-## Residuals   20978 2.551e+07      1216                     
+## alg             1 1.082e+03      1082 9.050e-01  0.342    
+## beta           20 1.744e+10 871789885 7.292e+05 &lt;2e-16 ***
+## Residuals   20978 2.508e+07      1196                     
 ## ---
 ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">TukeyHSD</span>(s.fit,<span class="dt">which=</span><span class="st">"alg"</span>)</code></pre></div>
@@ -234,8 +233,8 @@ s.fit &lt;-<span class="st"> </span><span class="kw">aov</span>(stat <span class
 ## Fit: aov(formula = stat ~ alg + beta, data = s.frame)
 ## 
 ## $alg
-##                    diff      lwr       upr     p adj
-## swNoData-SW -0.07238095 -1.01564 0.8708778 0.8804454</code></pre>
+##                   diff       lwr       upr     p adj
+## swNoData-SW -0.4539048 -1.389276 0.4814666 0.3415339</code></pre>
 <div id="references" class="section level3">
 <h3 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h3>
