@@ -51,6 +51,9 @@
       <a href="../articles/mcmcPottsNoData.html">mcmcPottsNoData</a>
     </li>
     <li>
+      <a href="../articles/PFAB.html">PFAB algorithm</a>
+    </li>
+    <li>
       <a href="../articles/swNoData.html">swNoData</a>
     </li>
   </ul>
@@ -169,7 +172,7 @@ block &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getBl
 edges &lt;-<span class="st"> </span><span class="kw"><a href="../reference/getEdges.html">getEdges</a></span>(mask, <span class="kw">c</span>(<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">0</span>,<span class="dv">0</span>))
 <span class="kw">system.time</span>(res2.Gibbs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/mcmcPottsNoData.html">mcmcPottsNoData</a></span>(<span class="dt">beta=</span><span class="dv">0</span>, <span class="dt">k=</span><span class="dv">3</span>, neigh, block, <span class="dt">niter=</span><span class="dv">100</span>, <span class="dt">random=</span><span class="ot">FALSE</span>))</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.381   0.023   0.136</code></pre>
+##   0.412   0.002   0.105</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res2.Gibbs<span class="op">$</span>sum, <span class="dt">ylim=</span><span class="kw">range</span>(<span class="kw">c</span>(res2.Gibbs<span class="op">$</span>sum, <span class="kw">nrow</span>(edges))))
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>)
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges)<span class="op">/</span><span class="dv">3</span>, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
@@ -191,7 +194,7 @@ sdSz &lt;-<span class="st"> </span><span class="kw">sqrt</span>(<span class="kw"
 <p>Now for Swendsen-Wang:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">system.time</span>(res2.SW &lt;-<span class="st"> </span><span class="kw"><a href="../reference/swNoData.html">swNoData</a></span>(<span class="dt">beta=</span><span class="dv">0</span>, <span class="dt">k=</span><span class="dv">3</span>, neigh, block, <span class="dt">niter=</span><span class="dv">100</span>, <span class="dt">random=</span><span class="ot">FALSE</span>))</code></pre></div>
 <pre><code>##    user  system elapsed 
-##   0.734   0.073   0.234</code></pre>
+##   0.635   0.091   0.228</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">ts.plot</span>(res2.SW<span class="op">$</span>sum, <span class="dt">ylim=</span><span class="kw">range</span>(<span class="kw">c</span>(res2.SW<span class="op">$</span>sum, <span class="kw">nrow</span>(edges))))
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges), <span class="dt">col=</span><span class="dv">2</span>, <span class="dt">lty=</span><span class="dv">3</span>)
 <span class="kw">abline</span>(<span class="dt">h=</span><span class="kw">nrow</span>(edges)<span class="op">/</span><span class="dv">3</span>, <span class="dt">col=</span><span class="dv">4</span>, <span class="dt">lty=</span><span class="dv">3</span>)</code></pre></div>
